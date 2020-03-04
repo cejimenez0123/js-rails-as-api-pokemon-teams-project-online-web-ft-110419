@@ -34,9 +34,10 @@ function createTrainer(trainer){
         </ul>
       </div>
   `; 
-  addEventListeners
-  let  addBtn = template.getElementBy
- addBtn = template.addEventListener()
+  let  addBtn = template.querySelector("data-trainer-id")
+  let removeBtn = pokemonsList.getElementbyTagName("button")
+  removeBtn.addEventListener("click", releasePokemon)
+    addBtn.addEventListener("click", addPokemon)
     return template;
 }
 
@@ -75,11 +76,11 @@ function addPokemon(e) {
 
   console.log("Pie")
   }
-function addEventListeners(){
-   debugger
-    const addPokemonBtns = document.querySelectorAll(".card p + button");
-    const releaseBtns =  document.querySelectorAll(".card .release");
-    debugger
-    releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
-    addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
-    }
+// function addEventListeners(){
+//    debugger
+//     const addPokemonBtns = document.querySelectorAll(".card p + button");
+//     const releaseBtns =  document.querySelectorAll(".card .release");
+//     debugger
+//     releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
+//     addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
+//     }
