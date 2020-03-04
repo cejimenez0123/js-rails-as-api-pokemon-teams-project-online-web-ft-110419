@@ -6,7 +6,7 @@ const mainTag = document.querySelector('main')
 document.addEventListener("DOMContentLoaded",()=>{
     beginFetch()
 
-    addEventListeners()
+    
 })
     
 
@@ -19,6 +19,7 @@ function addTrainers(obj){
         createTrainer(trainer)
     let template = createTrainer(trainer);
     mainTag.innerHTML += template
+    
     }
 }
 
@@ -33,6 +34,9 @@ function createTrainer(trainer){
         </ul>
       </div>
   `; 
+  addEventListeners
+  let  addBtn = template.getElementBy
+ addBtn = template.addEventListener()
     return template;
 }
 
@@ -41,7 +45,9 @@ function addPokeToDom(pokemonArry) {
     for (const pokemon of pokemonArry) {
       pokemonsList += createPokemon(pokemon);
     }
+    
     return pokemonsList;
+
   }
 
 function createPokemon(pokemon) {
@@ -50,6 +56,7 @@ function createPokemon(pokemon) {
           ${pokemon.nickname} (${pokemon.species})
          <button class="release" data-pokemon-id="${pokemon.id}">Release</button>
          </li>`;
+         
   }
 
 function releasePokemon(e) {
@@ -69,9 +76,9 @@ function addPokemon(e) {
   console.log("Pie")
   }
 function addEventListeners(){
-   
+   debugger
     const addPokemonBtns = document.querySelectorAll(".card p + button");
-    const releaseBtns = document.querySelectorAll(".card .release");
+    const releaseBtns =  document.querySelectorAll(".card .release");
     debugger
     releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
     addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
