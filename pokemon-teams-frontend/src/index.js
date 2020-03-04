@@ -3,12 +3,15 @@ const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 const mainTag = document.querySelector('main')
 
-
+document.addEventListener("DOMContentLoaded",()=>{
     beginFetch()
+
     addEventListeners()
+})
+    
 
 function beginFetch() {
-   fetch(TRAINERS_URL).then( resp => resp.json())
+   return fetch(TRAINERS_URL).then( resp => resp.json())
    .then(obj => addTrainers(obj))
   }
 function addTrainers(obj){
@@ -50,6 +53,7 @@ function createPokemon(pokemon) {
   }
 
 function releasePokemon(e) {
+    debugger
     if (e.target.className == "release") {
       const pokemon = e.target.parentElement;
       const pokemonID = e.target.dataset.pokemonId;
@@ -61,11 +65,14 @@ function releasePokemon(e) {
 }
 
 function addPokemon(e) {
+
   console.log("Pie")
   }
 function addEventListeners(){
+   
     const addPokemonBtns = document.querySelectorAll(".card p + button");
     const releaseBtns = document.querySelectorAll(".card .release");
+    debugger
     releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
     addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
     }
