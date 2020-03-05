@@ -5,14 +5,16 @@ const mainTag = document.querySelector('main')
 
 document.addEventListener("DOMContentLoaded",()=>{
     beginFetch()
-
-    
+   
+    addEventListeners()
 })
     
 
 function beginFetch() {
-   return fetch(TRAINERS_URL).then( resp => resp.json())
-   .then(obj => addTrainers(obj))
+    
+  fetch(TRAINERS_URL).then( resp => resp.json())
+   .then(obj => {
+    addTrainers(obj)})
   }
 function addTrainers(obj){
     for(const trainer of obj){
@@ -34,10 +36,10 @@ function createTrainer(trainer){
         </ul>
       </div>
   `; 
-  let  addBtn = template.querySelector("data-trainer-id")
-  let removeBtn = pokemonsList.getElementbyTagName("button")
-  removeBtn.addEventListener("click", releasePokemon)
-    addBtn.addEventListener("click", addPokemon)
+//   let  addBtn = template.querySelector("button")
+//   let removeBtn = pokemonsList.getElementbyTagName("button")
+//   removeBtn.addEventListener("click", releasePokemon)
+//     addBtn.addEventListener("click", addPokemon)
     return template;
 }
 
@@ -61,26 +63,42 @@ function createPokemon(pokemon) {
   }
 
 function releasePokemon(e) {
-    debugger
     if (e.target.className == "release") {
       const pokemon = e.target.parentElement;
       const pokemonID = e.target.dataset.pokemonId;
   
       fetch(`${POKEMONS_URL}/${pokemonID}`, { method: "DELETE" });
-        debugger
       pokemon.remove();
 }
 }
 
 function addPokemon(e) {
-
-  console.log("Pie")
+    trainerUl = e.target.nextSibling.nextSibling
+    let config = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            trainer_id: e.target.dataset.trainerId
+        }    
+        )
+    }
+    fetch(POKEMONS_URL, config)
+      .then(resp => resp.json())
+      .then(pokemon => {
+        let pokemonElmt = createPokemon(pokemon);
+        trainerUl.innerHTML += pokemonElmt;
+      })
+      .catch(error => console.log(error));
   }
-// function addEventListeners(){
-//    debugger
-//     const addPokemonBtns = document.querySelectorAll(".card p + button");
-//     const releaseBtns =  document.querySelectorAll(".card .release");
-//     debugger
-//     releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
-//     addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
-//     }
+async function addEventListeners(){
+    await beginFetch()
+
+    const addPokemonBtns = document.querySelectorAll(".card p + button");
+    const releaseBtns =  document.querySelectorAll(".card .release");
+    releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon()));
+    addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon()));
+
+    }
