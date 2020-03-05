@@ -88,6 +88,7 @@ function addPokemon(e) {
       fetch(POKEMONS_URL, config)
         .then(resp => resp.json())
         .then(pokemon => {
+            debugger
           let pokemonElmt = createPokemon(pokemon);
           trainerUl.innerHTML += pokemonElmt;
         })
