@@ -6,7 +6,7 @@ const mainTag = document.querySelector('main')
 document.addEventListener("DOMContentLoaded",()=>{
     beginFetch()
    
-    addEventListeners()
+    
 })
     
 
@@ -23,6 +23,7 @@ function addTrainers(obj){
     mainTag.innerHTML += template
     
     }
+    addEventListeners()
 }
 
 function createTrainer(trainer){
@@ -73,32 +74,32 @@ function releasePokemon(e) {
 }
 
 function addPokemon(e) {
+    trainerId = e.target.dataset.trainerId
     trainerUl = e.target.nextSibling.nextSibling
     let config = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          Accept: "application/json"
         },
-        body: JSON.stringify({
-            trainer_id: e.target.dataset.trainerId
-        }    
-        )
+        body: JSON.stringify({ trainer_id: trainerId })
+      };
+  
+      fetch(POKEMONS_URL, config)
+        .then(resp => resp.json())
+        .then(pokemon => {
+          let pokemonElmt = createPokemon(pokemon);
+          trainerUl.innerHTML += pokemonElmt;
+        })
+        .catch(error => console.log(error));
     }
-    fetch(POKEMONS_URL, config)
-      .then(resp => resp.json())
-      .then(pokemon => {
-        let pokemonElmt = createPokemon(pokemon);
-        trainerUl.innerHTML += pokemonElmt;
-      })
-      .catch(error => console.log(error));
-  }
-async function addEventListeners(){
-    await beginFetch()
+  
+ function addEventListeners(){
+    
 
     const addPokemonBtns = document.querySelectorAll(".card p + button");
     const releaseBtns =  document.querySelectorAll(".card .release");
-    releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon()));
-    addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon()));
+    releaseBtns.forEach(btn => btn.addEventListener("click", releasePokemon));
+    addPokemonBtns.forEach(btn => btn.addEventListener("click", addPokemon));
 
     }
