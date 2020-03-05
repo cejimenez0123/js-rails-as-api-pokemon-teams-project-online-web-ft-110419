@@ -59,7 +59,7 @@ function createPokemon(pokemon) {
          <li>
           ${pokemon.nickname} (${pokemon.species})
          <button class="release" data-pokemon-id="${pokemon.id}">Release</button>
-         </li>`;
+         </li>`
          
   }
 
@@ -74,8 +74,10 @@ function releasePokemon(e) {
 }
 
 function addPokemon(e) {
+    debugger
     trainerId = e.target.dataset.trainerId
     trainerUl = e.target.nextSibling.nextSibling
+    if (trainerUl.childElementCount <= 6){
     let config = {
         method: "POST",
         headers: {
@@ -88,11 +90,14 @@ function addPokemon(e) {
       fetch(POKEMONS_URL, config)
         .then(resp => resp.json())
         .then(pokemon => {
-            debugger
           let pokemonElmt = createPokemon(pokemon);
           trainerUl.innerHTML += pokemonElmt;
         })
         .catch(error => console.log(error));
+    } else {
+        error = " Teams can be max 6"
+        alert(error)
+    }
     }
   
  function addEventListeners(){
